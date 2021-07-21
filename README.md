@@ -1,5 +1,4 @@
 # EV3Controller
 ## To do:
-* Make better UI
-* Add selectable motors
-* Add mappable keybinds
+* Add mappable keybinds (or not, idk if its worth doing)
+* Colours?
