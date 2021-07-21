@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Lego.Ev3.Core;
 using Lego.Ev3.Desktop;
 
@@ -11,10 +11,12 @@ namespace EV3Controller
         // Initialise objects and variables
         Brick brick;
         string COMPort;
-        int driveSpeed;
-        int turnSpeed;
-        bool run, fwd, bwd, left, right, aM1, aM1i, aM2, aM2i, mStop;
+        int driveSpeed, turnSpeed, aM1Speed, aM2Speed;
+        bool run, fwd, bwd, left, right, aM1, aM1i, aM2, aM2i, eStop;
+        OutputPort leftDrive, rightDrive, aMotor1, aMotor2;
+        OutputPort[] ports = { OutputPort.A, OutputPort.B, OutputPort.C, OutputPort.D };
 
+        // Initialise keybinds
         Key keyF = Key.W;
         Key keyB = Key.S;
         Key keyL = Key.A;
@@ -23,12 +25,37 @@ namespace EV3Controller
         Key keyaM1i = Key.I;
         Key keyaM2 = Key.J;
         Key keyaM2i = Key.K;
-        Key keyStop = Key.Space;
 
-        OutputPort leftDrive = OutputPort.B;
-        OutputPort rightDrive = OutputPort.C;
-        OutputPort aMotor1 = OutputPort.A;
-        OutputPort aMotor2 = OutputPort.D;
+        // Key HELL (there's gotta be a better way but i cbf rn)
+        private void FWD_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void BWD_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void Left_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void Right_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void AM1_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void AM1i_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void AM2_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+        private void AM2i_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
+
+        // Left drive port select
+        private void LeftDrivePort_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            leftDrive = ports[LeftDrivePort.SelectedIndex];
+        }
+        // Right drive port select
+        private void RightDrivePort_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            rightDrive = ports[RightDrivePort.SelectedIndex];
+        }
+        // Additional motor 1 port select
+        private void AMotor1Port_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            aMotor1 = ports[AMotor1Port.SelectedIndex];
+        }
+        // Additional motor 2 port select
+        private void AMotor2Port_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            aMotor2 = ports[AMotor2Port.SelectedIndex];
+        }
 
         // Turn program on/off
         private void On_Off_Click(object sender, RoutedEventArgs e)
@@ -36,14 +63,33 @@ namespace EV3Controller
             if (run)
             {
                 run = false;
-                Console.WriteLine("Program is OFF");
+                On_Off.Background = Brushes.Red;
+
             }
             else
             {
                 run = true;
-                Console.WriteLine("Program is ON");
+                On_Off.Background = Brushes.Green;
                 Connect_EV3();
             }
+        }
+
+        // Emergency stop
+        private async void E_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            if (eStop)
+            {
+                eStop = false;
+                E_Stop.Background = Brushes.Red;
+            }
+            else
+            {
+                eStop = true;
+                E_Stop.Background = Brushes.Green;
+                await brick.DirectCommand.StopMotorAsync(OutputPort.All, true);
+                await brick.DirectCommand.TurnMotorAtPowerAsync(OutputPort.All, 0);
+            }
+            
         }
 
         // Connect to EV3
@@ -53,7 +99,6 @@ namespace EV3Controller
             {
                 brick = new Brick(new BluetoothCommunication(COMPort));
                 await brick.ConnectAsync();
-                System.Console.WriteLine("Brick connection SUCCESSFUL");
 
                 await brick.DirectCommand.PlayToneAsync(10, 400, 300);
                 System.Threading.Thread.Sleep(300);
@@ -62,26 +107,78 @@ namespace EV3Controller
             catch (System.IO.IOException)
             {
                 run = false;
-                Console.WriteLine("Brick connection FAILED");
             }
         }
 
         // Change drive speed
         private void Drive_Speed_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            driveSpeed = int.Parse(Drive_Speed.Text);
+            try
+            {
+                driveSpeed = int.Parse(Drive_Speed.Text);
+                Drive_Speed.Background = Brushes.White;
+            }
+            catch (System.FormatException)
+            {
+                Drive_Speed.Background = Brushes.Red;
+
+            }
         }
 
         // Change turn speed
         private void Turn_Speed_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            turnSpeed = int.Parse(Turn_Speed.Text);
+            try
+            {
+                turnSpeed = int.Parse(Turn_Speed.Text);
+                Turn_Speed.Background = Brushes.White;
+            }
+            catch (System.FormatException)
+            {
+                Turn_Speed.Background = Brushes.Red;
+            }
+        }
+
+        // Change additional motor 1 speed
+        private void AM1_Speed_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                aM1Speed = int.Parse(AM1_Speed.Text);
+                AM1_Speed.Background = Brushes.White;
+            }
+            catch (System.FormatException)
+            {
+                AM1_Speed.Background = Brushes.Red;
+            }
+        }
+
+        // Change additional motor 2 speed
+        private void AM2_Speed_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                aM2Speed = int.Parse(AM2_Speed.Text);
+                AM2_Speed.Background = Brushes.White;
+            }
+            catch (System.FormatException)
+            {
+                AM2_Speed.Background = Brushes.Red;
+            }
         }
 
         // Change COM port
         private void COM_Port_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            COMPort = "COM" + COM_Port.Text;
+            try
+            {
+                COMPort = "COM" + int.Parse(COM_Port.Text).ToString();
+                COM_Port.Background = Brushes.White;
+            }
+            catch (System.FormatException)
+            {
+                COM_Port.Background = Brushes.Red;
+            }
         }
 
         // Initialise window
@@ -93,7 +190,7 @@ namespace EV3Controller
         // Drive commands
         private async void Drive()
         {
-            if (run)
+            if (run && !eStop)
             {
                 // Forward
                 if (fwd && !bwd && !left && !right)
@@ -146,39 +243,33 @@ namespace EV3Controller
                 {
                     await brick.DirectCommand.TurnMotorAtPowerAsync(leftDrive | rightDrive, 0);
                 }
-                // Stop Motors
-                if (mStop)
-                {
-                    Console.WriteLine("Motors stopped");
-                    await brick.DirectCommand.StopMotorAsync(OutputPort.All, true);
-                }
             }
         }
         
         // Additional motor commands
         private async void MotorControl()
         {
-            if (run)
+            if (run && !eStop)
             {
                 // Additional Motor 1
                 if (aM1 && !aM1i)
                 {
-                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor1, turnSpeed);
+                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor1, aM1Speed);
                 }
                 // Additional Motor 1 (inverse)
                 if (!aM1 && aM1i)
                 {
-                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor1, -turnSpeed);
+                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor1, -aM1Speed);
                 }
                 // Additional Motor 2
                 if (aM2 && !aM2i)
                 {
-                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor2, turnSpeed);
+                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor2, aM2Speed);
                 }
                 // Additional Motor 2 (inverse)
                 if (!aM2 && aM2i)
                 {
-                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor2, -turnSpeed);
+                    await brick.DirectCommand.TurnMotorAtPowerAsync(aMotor2, -aM2Speed);
                 }
                 // No Additional Motor 1
                 if (!aM1 && !aM1i)
@@ -236,11 +327,6 @@ namespace EV3Controller
             {
                 aM2i = true;
             }
-            // Stop all
-            if (e.Key == keyStop)
-            {
-                mStop = true;
-            }
             Drive();
             MotorControl();
         }
@@ -287,11 +373,6 @@ namespace EV3Controller
             if (e.Key == keyaM2i)
             {
                 aM2i = false;
-            }
-            // Stop all
-            if (e.Key == keyStop)
-            {
-                mStop = false;
             }
             Drive();
             MotorControl();

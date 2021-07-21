@@ -16,6 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -27,42 +28,75 @@
         <Label VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Foreground="White">Right Drive</Label>
         <Label VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Foreground="White">Additional Motor 1</Label>
         <Label VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" Foreground="White">Additional Motor 2</Label>
-        <ListBox Name="LeftDrivePort" Grid.Column="0" Grid.Row="1">
+        <ListBox Name="LeftDrivePort" Grid.Column="0" Grid.Row="1" SelectionChanged="LeftDrivePort_SelectionChanged">
             <ListBoxItem>A</ListBoxItem>
             <ListBoxItem>B</ListBoxItem>
             <ListBoxItem>C</ListBoxItem>
             <ListBoxItem>D</ListBoxItem>
         </ListBox>
-        <ListBox Name="RightDrivePort" Grid.Column="1" Grid.Row="1">
+        <ListBox Name="RightDrivePort" Grid.Column="1" Grid.Row="1" SelectionChanged="RightDrivePort_SelectionChanged">
             <ListBoxItem>A</ListBoxItem>
             <ListBoxItem>B</ListBoxItem>
             <ListBoxItem>C</ListBoxItem>
             <ListBoxItem>D</ListBoxItem>
         </ListBox>
-        <ListBox Name="AMotor1Port" Grid.Column="2" Grid.Row="1">
+        <ListBox Name="AMotor1Port" Grid.Column="2" Grid.Row="1" SelectionChanged="AMotor1Port_SelectionChanged">
             <ListBoxItem>A</ListBoxItem>
             <ListBoxItem>B</ListBoxItem>
             <ListBoxItem>C</ListBoxItem>
             <ListBoxItem>D</ListBoxItem>
         </ListBox>
-        <ListBox Name="AMotor2Port" Grid.Column="3" Grid.Row="1">
+        <ListBox Name="AMotor2Port" Grid.Column="3" Grid.Row="1" SelectionChanged="AMotor2Port_SelectionChanged">
             <ListBoxItem>A</ListBoxItem>
             <ListBoxItem>B</ListBoxItem>
             <ListBoxItem>C</ListBoxItem>
             <ListBoxItem>D</ListBoxItem>
         </ListBox>
+        
         <StackPanel Margin="10" Grid.Column="0" Grid.Row="2">
+            <Label Content="Forward:"/>
+            <TextBox Name="FWD" TextChanged="FWD_TextChanged"/>
+            <Label Content="Backward:"/>
+            <TextBox Name="BWD" TextChanged="BWD_TextChanged"/>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="1" Grid.Row="2">
+            <Label Content="Left:"/>
+            <TextBox Name="Left" TextChanged="Left_TextChanged"/>
+            <Label Content="Right:"/>
+            <TextBox Name="Right" TextChanged="Right_TextChanged"/>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="2" Grid.Row="2">
+            <Label Content="Additional Motor 1:"/>
+            <TextBox Name="AM1" TextChanged="AM1_TextChanged"/>
+            <Label Content="Additional Motor 1 Inverse:"/>
+            <TextBox Name="AM1i" TextChanged="AM1i_TextChanged"/>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="3" Grid.Row="2">
+            <Label Content="Additional Motor 2:"/>
+            <TextBox Name="AM2" TextChanged="AM2_TextChanged"/>
+            <Label Content="Additional Motor 2 Inverse:"/>
+            <TextBox Name="AM2i" TextChanged="AM2i_TextChanged"/>
+        </StackPanel>
+        
+        <StackPanel Margin="10" Grid.Column="0" Grid.Row="3">
             <Label Content="Drive Speed:"/>
             <TextBox Name="Drive_Speed" TextChanged="Drive_Speed_TextChanged"/>
             <Label Content="Turn Speed:"/>
             <TextBox Name="Turn_Speed" TextChanged="Turn_Speed_TextChanged"/>
         </StackPanel>
-        <StackPanel Margin="10" Grid.Column="1" Grid.Row="2">
+        <StackPanel Margin="10" Grid.Column="1" Grid.Row="3">
+            <Label Content="Additional Motor 1 Speed:"/>
+            <TextBox Name="AM1_Speed" TextChanged="AM1_Speed_TextChanged"/>
+            <Label Content="Additional Motor 2 Speed:"/>
+            <TextBox Name="AM2_Speed" TextChanged="AM2_Speed_TextChanged"/>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="2" Grid.Row="3">
             <Label Content="COM Port:"/>
             <TextBox Name="COM_Port" TextChanged="COM_Port_TextChanged" />
         </StackPanel>
-        <StackPanel Margin="10" Grid.Column="2" Grid.Row="2">
-            <Button Name="On_Off" Click="On_Off_Click">On / Off</Button>
+        <StackPanel Margin="10" Grid.Column="3" Grid.Row="3">
+            <Button Name="On_Off" Click="On_Off_Click" Height="30" Margin="10" Background="Red" Foreground="White">On / Off</Button>
+            <Button Name="E_Stop" Click="E_Stop_Click" Height="30" Margin="10" Background="Red" Foreground="White">Emergency Stop</Button>
         </StackPanel>
     </Grid>
 </Window>
