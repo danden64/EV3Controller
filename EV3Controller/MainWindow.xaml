@@ -1,0 +1,68 @@
+﻿<Window x:Class="EV3Controller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EV3Controller"
+        mc:Ignorable="d"
+        Title="EV3 Controller" Height="450" Width="800" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" Height="35" Padding="5" Background="#4E87D4"/>
+        <Border Grid.Column="1" Grid.Row="0" Height="35" Padding="5" Background="#4E87D4"/>
+        <Border Grid.Column="2" Grid.Row="0" Height="35" Padding="5" Background="#4E87D4"/>
+        <Border Grid.Column="3" Grid.Row="0" Height="35" Padding="5" Background="#4E87D4"/>
+        <Label VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Foreground="White">Left Drive</Label>
+        <Label VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Foreground="White">Right Drive</Label>
+        <Label VerticalAlignment="Center" Grid.Column="2" Grid.Row="0" Foreground="White">Additional Motor 1</Label>
+        <Label VerticalAlignment="Center" Grid.Column="3" Grid.Row="0" Foreground="White">Additional Motor 2</Label>
+        <ListBox Name="LeftDrivePort" Grid.Column="0" Grid.Row="1">
+            <ListBoxItem>A</ListBoxItem>
+            <ListBoxItem>B</ListBoxItem>
+            <ListBoxItem>C</ListBoxItem>
+            <ListBoxItem>D</ListBoxItem>
+        </ListBox>
+        <ListBox Name="RightDrivePort" Grid.Column="1" Grid.Row="1">
+            <ListBoxItem>A</ListBoxItem>
+            <ListBoxItem>B</ListBoxItem>
+            <ListBoxItem>C</ListBoxItem>
+            <ListBoxItem>D</ListBoxItem>
+        </ListBox>
+        <ListBox Name="AMotor1Port" Grid.Column="2" Grid.Row="1">
+            <ListBoxItem>A</ListBoxItem>
+            <ListBoxItem>B</ListBoxItem>
+            <ListBoxItem>C</ListBoxItem>
+            <ListBoxItem>D</ListBoxItem>
+        </ListBox>
+        <ListBox Name="AMotor2Port" Grid.Column="3" Grid.Row="1">
+            <ListBoxItem>A</ListBoxItem>
+            <ListBoxItem>B</ListBoxItem>
+            <ListBoxItem>C</ListBoxItem>
+            <ListBoxItem>D</ListBoxItem>
+        </ListBox>
+        <StackPanel Margin="10" Grid.Column="0" Grid.Row="2">
+            <Label Content="Drive Speed:"/>
+            <TextBox Name="Drive_Speed" TextChanged="Drive_Speed_TextChanged"/>
+            <Label Content="Turn Speed:"/>
+            <TextBox Name="Turn_Speed" TextChanged="Turn_Speed_TextChanged"/>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="1" Grid.Row="2">
+            <Label Content="COM Port:"/>
+            <TextBox Name="COM_Port" TextChanged="COM_Port_TextChanged" />
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="2" Grid.Row="2">
+            <Button Name="On_Off" Click="On_Off_Click">On / Off</Button>
+        </StackPanel>
+    </Grid>
+</Window>
