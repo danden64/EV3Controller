@@ -8,9 +8,9 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EV3Controller")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Desktop EV3 Bluetooth Controller")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Robotics Club JMSS")]
 [assembly: AssemblyProduct("EV3Controller")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
