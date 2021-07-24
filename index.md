@@ -6,6 +6,10 @@ Here is the documentation for how to use the EV3Controller
 
 I don't know right now, but hopefully this will work soon
 
+https://github.com/danden64/EV3Controller/blob/master/setup.exe
+
+https://github.com/danden64/EV3Controller/blob/master/EV3Controller.application
+
 ## How to use the controller
 
 ### Motors
