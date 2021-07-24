@@ -26,16 +26,6 @@ namespace EV3Controller
         Key keyaM2 = Key.J;
         Key keyaM2i = Key.K;
 
-        // Key HELL (there's gotta be a better way but i cbf rn)
-        private void FWD_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void BWD_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void Left_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void Right_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void AM1_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void AM1i_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void AM2_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-        private void AM2i_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) { }
-
         // Left drive port select
         private void LeftDrivePort_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
